@@ -8,3 +8,6 @@ import pandas as pd # CSV, Excel 데이터 처리
 class StudentManagerApp:
     # 초기화 메서드
     def __init__(self, root):
+        self.root = root  # 메인 윈도우
+        self.root.title("학생 정보 관리 프로그램") # 윈도우 제목 설정
+        self.root.geometry("600x420") # 윈도우 크기 설정
