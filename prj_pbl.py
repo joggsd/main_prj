@@ -59,3 +59,5 @@ class StudentManagerApp:
         ttk.Button(btn_frame, text="파일 불러오기", command=self.load_file).grid(row=0, column=2, padx=10)
 
         #----기능함수----
+        # 학생 추가 함수
+        def add_student(self):
