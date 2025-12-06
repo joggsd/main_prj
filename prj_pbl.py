@@ -88,3 +88,16 @@ class StudentManagerApp:
         # 선택된 항목 삭제
         for item in selected:
             self.tree.delete(item)
+
+    # 파일 저장 함수 (JSON, CSV, Excel)
+    def save_file(self):
+        file = filedialog.asksaveasfilename(
+            title="학생 정보 저장",
+            defaultextension=".json",
+            filetypes=[
+                ("JSON Files", "*.json"),
+                ("CSV Files", "*.csv"),
+                ("Excel Files", "*.xlsx"),
+                ("All Files", "*.*")
+            ]
+        )
