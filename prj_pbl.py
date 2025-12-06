@@ -59,3 +59,59 @@ class StudentManagerApp:
         ttk.Button(btn_frame, text="파일 불러오기", command=self.load_file).grid(row=0, column=2, padx=10)
 
         #----기능함수----
+        # 학생 추가 함수
+        def add_student(self):
+            # 입력값 가져오기
+            name = self.name_entry.get().strip()
+            sid = self.id_entry.get().strip()
+            major = self.major_entry.get().strip()
+        # 입력값 유효성 검사
+        if not name or not sid or not major:
+            messagebox.showwarning("입력 오류", "모든 항목을 입력하세요.")
+            return
+
+        # 목록에 학생 추가
+        self.tree.insert("", "end", values=(name, sid, major))
+
+        # 입력 필드 초기화
+        self.name_entry.delete(0, tk.END)
+        self.id_entry.delete(0, tk.END)
+        self.major_entry.delete(0, tk.END)
+
+    # 학생 삭제 함수
+    def delete_student(self):
+        selected = self.tree.selection() # 선택된 항목 가져오기
+        if not selected:
+            messagebox.showwarning("선택 오류", "삭제할 학생을 선택하세요.")
+            return
+        
+        # 선택된 항목 삭제
+        for item in selected:
+            self.tree.delete(item)
+
+    # 파일 저장 함수 (JSON, CSV, Excel)
+    def save_file(self):
+        file = filedialog.asksaveasfilename(
+            title="학생 정보 저장",
+            defaultextension=".json",
+            filetypes=[
+                ("JSON Files", "*.json"),
+                ("CSV Files", "*.csv"),
+                ("Excel Files", "*.xlsx"),
+                ("All Files", "*.*")
+            ]
+        )
+
+        # 저장 취소 시 종료
+        if not file:
+            return
+        
+        # Treeview 데이터를 리스트로 변환
+        students = []
+        for row in self.tree.get_children():
+            values = self.tree.item(row)["values"]
+            students.append({
+                "name": values[0],
+                "id": values[1],
+                "major": values[2]
+            })
